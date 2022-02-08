@@ -76,7 +76,8 @@ def get_age():
     tbox_age.config(state= 'normal')
 
     #age calculated is insert into the text box after clearing th eprevious info in the textbox.
-    tbox_age.delete
+    tbox_age.delete('1.0', tk.END)
+    tbox_age.
 
 
 
