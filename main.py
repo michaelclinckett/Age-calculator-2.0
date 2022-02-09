@@ -49,26 +49,30 @@ def validation():
 
     msg = ''
 
-    if len(d) == 0 or len(y) == 0:
+    if len(d) < 0 or len(y) == 0:
         msg = 'day, month and year can\'t be empty'
     else:
         try:
             if any(ch.isdigit() for ch in d) == False:
-
-                msg = 'day must be a number idiot'
+                msg = 'Put in a numerical numbers for date to proceed'
             #elif any(ch.isdigit() for ch in m) == False:
             elif m == 0:
-                msg = 'Chose a month idiot'
+                msg = 'Chose a month'
             elif any(ch.isdigit() for ch in y) == False:
-                msg = 'year must be a number idiot'
+                msg = 'Put in a numerical numbers for year to proceed'
             else:
                 # msg = 'success!'
                 day = int(d) - 1
-                #month = int(m)
+                                  #month = int(m)
                 month = m #month is already in number from list position
                 year = int(y)
-                calc_age = find_age(day, month, year)
-                display_calc_age(calc_age)
+                if day == 0 or year == 0 or day > 31:        
+                  calc_age = find_age(day, month, year)
+                  display_calc_age(calc_age)
+                  if year > today.year:
+                    msg = 'Year cannot be over the current year'
+                else:
+                  msg = 'Day and year must exist'
 
         except Exception as ep:
             messagebox.showerror('error', ep)
@@ -113,7 +117,7 @@ lb_month = tk.Label(window,
                     bg="#00287F")
 #Year
 lb_year = tk.Label(window,
-                   text="Year: ",
+                   text="Year(In AC): ",
                    font=('Arial', 12, "bold"),
                    fg="darkgreen",
                    bg="#00287F")
@@ -169,9 +173,9 @@ btn_exit = tk.Button(window,
 # Placing the elements on the screen
 lb_heading.place(x=40, y=5)
 lb_subheading.place(x=4, y=40)
-lb_date.place(x=100, y=70)
+lb_date.place(x=117, y=70)
 lb_month.place(x=100, y=95)
-lb_year.place(x=100, y=120)
+lb_year.place(x=49, y=120)
 e_date.place(x=180, y=70)
 #e_month.place(x=180, y=95)
 month_chosen.place(x=180,y=95)
