@@ -12,14 +12,14 @@ today = date.today()
 
 
 #__________ Functions __________#
-def get_age():
-    #get the 3 entries
-    d = int(e_date.get())
-    m = int(e_month.get())
-    y = int(e_year.get())
-
-    calc_age = find_age(d, m, y)
-    display_calc_age(calc_age)
+#def get_age():
+#    #get the 3 entries
+#    d = int(e_date.get())
+#    m = int(e_month.get())
+#    y = int(e_year.get())
+#
+#    calc_age = find_age(d, m, y)
+#    display_calc_age(calc_age)
 
 
 def find_age(d, m, y):
@@ -42,27 +42,30 @@ def exit():
 
 def validation():
     #gets the three entries
-    d = e_date.get()
-    m = e_month.get()
+    d = e_date.get() 
+    #m = e_month.get()
+    m = month_chosen.current()
     y = e_year.get()
 
     msg = ''
 
-    if len(d) == 0 or len(m) == 0 or len(y) == 0:
+    if len(d) == 0 or len(y) == 0:
         msg = 'day, month and year can\'t be empty'
     else:
         try:
             if any(ch.isdigit() for ch in d) == False:
 
                 msg = 'day must be a number idiot'
-            elif any(ch.isdigit() for ch in m) == False:
-                msg = 'month must be a number idiot'
+            #elif any(ch.isdigit() for ch in m) == False:
+            elif m == 0:
+                msg = 'Chose a month idiot'
             elif any(ch.isdigit() for ch in y) == False:
                 msg = 'year must be a number idiot'
             else:
                 # msg = 'success!'
-                day = int(d)
-                month = int(m)
+                day = int(d) - 1
+                #month = int(m)
+                month = m #month is already in number from list position
                 year = int(y)
                 calc_age = find_age(day, month, year)
                 display_calc_age(calc_age)
@@ -117,7 +120,30 @@ lb_year = tk.Label(window,
 
 # Entry boxes for date, month and year
 e_date = tk.Entry(window, width=5)
-e_month = tk.Entry(window, width=5)
+#e_month = tk.Entry(window, width=5)
+
+# Combobox creation
+n = tk.StringVar()
+month_chosen = ttk.Combobox(window, textvariable = n, width=12)
+
+# Adding combobox drop down list
+month_chosen['values'] = ('Select a date...', 
+                          'January', 
+                          'February',
+                          'March',
+                          'April',
+                          'May',
+                          'June',
+                          'July',
+                          'August',
+                          'September',
+                          'October',
+                          'November',
+                          'December')
+
+
+month_chosen['state'] = 'readonly'
+
 e_year = tk.Entry(window, width=5)
 
 #Button to calculate age
@@ -147,7 +173,8 @@ lb_date.place(x=100, y=70)
 lb_month.place(x=100, y=95)
 lb_year.place(x=100, y=120)
 e_date.place(x=180, y=70)
-e_month.place(x=180, y=95)
+#e_month.place(x=180, y=95)
+month_chosen.place(x=180,y=95)
 e_year.place(x=180, y=120)
 btn_calculate_age.place(x=100, y=150)
 lb_calculated_age.place(x=10, y=200)
